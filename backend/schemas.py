@@ -33,3 +33,40 @@ class SiteResponse(SiteBase):
 
     class Config:
         from_attributes = True
+
+# ==========================================
+# ساختار اطلاعات رک‌ها (Racks)
+# ==========================================
+class RackBase(BaseModel):
+    name: str
+    size_u: int      # سایز رک بر اساس یونیت (مثلا 42)
+    site_id: int     # هر رک باید داخل یک سایت مشخص باشد
+
+class RackCreate(RackBase):
+    pass
+
+class RackResponse(RackBase):
+    id: int
+
+    class Config:
+        from_attributes = True
+
+
+# ==========================================
+# ساختار اطلاعات تجهیزات (Devices)
+# ==========================================
+class DeviceBase(BaseModel):
+    name: str
+    device_type: str # مثلا switch, server, patch_panel
+    rack_id: int
+    start_u: Optional[int] = None # نصب شده از یونیت
+    end_u: Optional[int] = None   # تا یونیت
+
+class DeviceCreate(DeviceBase):
+    pass
+
+class DeviceResponse(DeviceBase):
+    id: int
+
+    class Config:
+        from_attributes = True

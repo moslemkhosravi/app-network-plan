@@ -109,3 +109,79 @@ def read_sites(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     logger.info(f"Success: Fetched {len(sites)} sites")
     return sites
 
+
+# ==========================================
+# API های مربوط به رک‌ها (Racks)
+# ==========================================
+
+@app.post("/racks/", response_model=schemas.RackResponse)
+def create_rack(rack: schemas.RackCreate, db: Session = Depends(get_db)):
+    logger.debug(f"Attempting to create new rack: {rack.name} for site ID: {rack.site_id}")
+    
+    # بررسی می‌کنیم که آیا سایتی با این ID وجود دارد؟
+    db_site = db.query(models.Site).filter(models.Site.id == rack.site_id).first()
+    if not db_site:
+        logger.error(f"Creation Failed: Site ID '{rack.site_id}' not found.")
+        raise HTTPException(status_code=404, detail="سایت مورد نظر یافت نشد")
+    
+    try:
+        new_rack = models.Rack(name=rack.name, size_u=rack.size_u, site_id=rack.site_id)
+        db.add(new_rack)
+        db.commit()
+        db.refresh(new_rack)
+        logger.info(f"Success: Rack '{new_rack.name}' saved to DB with ID {new_rack.id}")
+        return new_rack
+    except Exception as e:
+        logger.error(f"Database Error while saving rack: {str(e)}")
+        db.rollback()
+        raise HTTPException(status_code=500, detail="خطای داخلی در اتصال به دیتابیس")
+
+@app.get("/racks/", response_model=list[schemas.RackResponse])
+def read_racks(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    logger.debug("Fetching racks list from DB")
+    racks = db.query(models.Rack).offset(skip).limit(limit).all()
+    logger.info(f"Success: Fetched {len(racks)} racks")
+    return racks
+
+
+# ==========================================
+# API های مربوط به تجهیزات (Devices)
+# ==========================================
+
+@app.post("/devices/", response_model=schemas.DeviceResponse)
+def create_device(device: schemas.DeviceCreate, db: Session = Depends(get_db)):
+    logger.debug(f"Attempting to create new device: {device.name} in rack ID: {device.rack_id}")
+    
+    # اول بررسی می‌کنیم که رک انتخاب شده وجود داشته باشد
+    db_rack = db.query(models.Rack).filter(models.Rack.id == device.rack_id).first()
+    if not db_rack:
+        logger.error(f"Creation Failed: Rack ID '{device.rack_id}' not found.")
+        raise HTTPException(status_code=404, detail="رک مورد نظر یافت نشد")
+    
+    try:
+        new_device = models.Device(
+            name=device.name, 
+            device_type=device.device_type, 
+            rack_id=device.rack_id,
+            start_u=device.start_u,
+            end_u=device.end_u
+        )
+        db.add(new_device)
+        db.commit()
+        db.refresh(new_device)
+        logger.info(f"Success: Device '{new_device.name}' saved to DB with ID {new_device.id}")
+        return new_device
+    except Exception as e:
+        logger.error(f"Database Error while saving device: {str(e)}")
+        db.rollback()
+        raise HTTPException(status_code=500, detail="خطای داخلی در اتصال به دیتابیس")
+
+@app.get("/devices/", response_model=list[schemas.DeviceResponse])
+def read_devices(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    logger.debug("Fetching devices list from DB")
+    devices = db.query(models.Device).offset(skip).limit(limit).all()
+    logger.info(f"Success: Fetched {len(devices)} devices")
+    return devices
+
+
+
