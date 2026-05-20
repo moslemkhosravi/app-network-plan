@@ -16,3 +16,20 @@ class ClientResponse(ClientBase):
 
     class Config:
         from_attributes = True
+
+# ==========================================
+# ساختار اطلاعات سایت‌ها (Sites)
+# ==========================================
+class SiteBase(BaseModel):
+    name: str
+    address: Optional[str] = None
+    client_id: int  # هر سایت باید به یک مشتری وصل باشد
+
+class SiteCreate(SiteBase):
+    pass
+
+class SiteResponse(SiteBase):
+    id: int
+
+    class Config:
+        from_attributes = True

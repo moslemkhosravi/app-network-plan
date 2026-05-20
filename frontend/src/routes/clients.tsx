@@ -37,7 +37,7 @@ function ClientsPage() {
   const [form, setForm] = useState({ name: "", contact: "" });
 
   // تشخیص خودکار آی‌پی سرور برای اتصال به بک‌اند پایتون
-  const API_BASE_URL = `http://${window.location.hostname}:8000`;
+  const API_BASE_URL = typeof window !== "undefined" ? `http://${window.location.hostname}:8000` : "http://127.0.0.1:8000";
 
   // دریافت لیست مشتریان از دیتابیس
   const fetchClients = async () => {
