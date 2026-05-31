@@ -9,17 +9,39 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as UsersRouteImport } from './routes/users'
+import { Route as SystemsRouteImport } from './routes/systems'
 import { Route as SitesRouteImport } from './routes/sites'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as RacksRouteImport } from './routes/racks'
+import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as PortsRouteImport } from './routes/ports'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as IpConfigRouteImport } from './routes/ip-config'
 import { Route as DevicesRouteImport } from './routes/devices'
 import { Route as ConfigHistoryRouteImport } from './routes/config-history'
 import { Route as ClientsRouteImport } from './routes/clients'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ClientsClientIdRouteImport } from './routes/clients.$clientId'
 
+const UsersRoute = UsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SystemsRoute = SystemsRouteImport.update({
+  id: '/systems',
+  path: '/systems',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SitesRoute = SitesRouteImport.update({
   id: '/sites',
   path: '/sites',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RacksRoute = RacksRouteImport.update({
@@ -27,9 +49,24 @@ const RacksRoute = RacksRouteImport.update({
   path: '/racks',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PortsRoute = PortsRouteImport.update({
   id: '/ports',
   path: '/ports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IpConfigRoute = IpConfigRouteImport.update({
+  id: '/ip-config',
+  path: '/ip-config',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DevicesRoute = DevicesRouteImport.update({
@@ -52,34 +89,60 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ClientsClientIdRoute = ClientsClientIdRouteImport.update({
+  id: '/$clientId',
+  path: '/$clientId',
+  getParentRoute: () => ClientsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/clients': typeof ClientsRoute
+  '/clients': typeof ClientsRouteWithChildren
   '/config-history': typeof ConfigHistoryRoute
   '/devices': typeof DevicesRoute
+  '/ip-config': typeof IpConfigRoute
+  '/login': typeof LoginRoute
   '/ports': typeof PortsRoute
+  '/profile': typeof ProfileRoute
   '/racks': typeof RacksRoute
+  '/settings': typeof SettingsRoute
   '/sites': typeof SitesRoute
+  '/systems': typeof SystemsRoute
+  '/users': typeof UsersRoute
+  '/clients/$clientId': typeof ClientsClientIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/clients': typeof ClientsRoute
+  '/clients': typeof ClientsRouteWithChildren
   '/config-history': typeof ConfigHistoryRoute
   '/devices': typeof DevicesRoute
+  '/ip-config': typeof IpConfigRoute
+  '/login': typeof LoginRoute
   '/ports': typeof PortsRoute
+  '/profile': typeof ProfileRoute
   '/racks': typeof RacksRoute
+  '/settings': typeof SettingsRoute
   '/sites': typeof SitesRoute
+  '/systems': typeof SystemsRoute
+  '/users': typeof UsersRoute
+  '/clients/$clientId': typeof ClientsClientIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/clients': typeof ClientsRoute
+  '/clients': typeof ClientsRouteWithChildren
   '/config-history': typeof ConfigHistoryRoute
   '/devices': typeof DevicesRoute
+  '/ip-config': typeof IpConfigRoute
+  '/login': typeof LoginRoute
   '/ports': typeof PortsRoute
+  '/profile': typeof ProfileRoute
   '/racks': typeof RacksRoute
+  '/settings': typeof SettingsRoute
   '/sites': typeof SitesRoute
+  '/systems': typeof SystemsRoute
+  '/users': typeof UsersRoute
+  '/clients/$clientId': typeof ClientsClientIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -88,46 +151,94 @@ export interface FileRouteTypes {
     | '/clients'
     | '/config-history'
     | '/devices'
+    | '/ip-config'
+    | '/login'
     | '/ports'
+    | '/profile'
     | '/racks'
+    | '/settings'
     | '/sites'
+    | '/systems'
+    | '/users'
+    | '/clients/$clientId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/clients'
     | '/config-history'
     | '/devices'
+    | '/ip-config'
+    | '/login'
     | '/ports'
+    | '/profile'
     | '/racks'
+    | '/settings'
     | '/sites'
+    | '/systems'
+    | '/users'
+    | '/clients/$clientId'
   id:
     | '__root__'
     | '/'
     | '/clients'
     | '/config-history'
     | '/devices'
+    | '/ip-config'
+    | '/login'
     | '/ports'
+    | '/profile'
     | '/racks'
+    | '/settings'
     | '/sites'
+    | '/systems'
+    | '/users'
+    | '/clients/$clientId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ClientsRoute: typeof ClientsRoute
+  ClientsRoute: typeof ClientsRouteWithChildren
   ConfigHistoryRoute: typeof ConfigHistoryRoute
   DevicesRoute: typeof DevicesRoute
+  IpConfigRoute: typeof IpConfigRoute
+  LoginRoute: typeof LoginRoute
   PortsRoute: typeof PortsRoute
+  ProfileRoute: typeof ProfileRoute
   RacksRoute: typeof RacksRoute
+  SettingsRoute: typeof SettingsRoute
   SitesRoute: typeof SitesRoute
+  SystemsRoute: typeof SystemsRoute
+  UsersRoute: typeof UsersRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/users': {
+      id: '/users'
+      path: '/users'
+      fullPath: '/users'
+      preLoaderRoute: typeof UsersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/systems': {
+      id: '/systems'
+      path: '/systems'
+      fullPath: '/systems'
+      preLoaderRoute: typeof SystemsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sites': {
       id: '/sites'
       path: '/sites'
       fullPath: '/sites'
       preLoaderRoute: typeof SitesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/racks': {
@@ -137,11 +248,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RacksRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/ports': {
       id: '/ports'
       path: '/ports'
       fullPath: '/ports'
       preLoaderRoute: typeof PortsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ip-config': {
+      id: '/ip-config'
+      path: '/ip-config'
+      fullPath: '/ip-config'
+      preLoaderRoute: typeof IpConfigRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/devices': {
@@ -172,17 +304,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/clients/$clientId': {
+      id: '/clients/$clientId'
+      path: '/$clientId'
+      fullPath: '/clients/$clientId'
+      preLoaderRoute: typeof ClientsClientIdRouteImport
+      parentRoute: typeof ClientsRoute
+    }
   }
 }
 
+interface ClientsRouteChildren {
+  ClientsClientIdRoute: typeof ClientsClientIdRoute
+}
+
+const ClientsRouteChildren: ClientsRouteChildren = {
+  ClientsClientIdRoute: ClientsClientIdRoute,
+}
+
+const ClientsRouteWithChildren =
+  ClientsRoute._addFileChildren(ClientsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ClientsRoute: ClientsRoute,
+  ClientsRoute: ClientsRouteWithChildren,
   ConfigHistoryRoute: ConfigHistoryRoute,
   DevicesRoute: DevicesRoute,
+  IpConfigRoute: IpConfigRoute,
+  LoginRoute: LoginRoute,
   PortsRoute: PortsRoute,
+  ProfileRoute: ProfileRoute,
   RacksRoute: RacksRoute,
+  SettingsRoute: SettingsRoute,
   SitesRoute: SitesRoute,
+  SystemsRoute: SystemsRoute,
+  UsersRoute: UsersRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
