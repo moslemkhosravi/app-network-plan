@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Iran Network</string>
+    <string name="title_activity_main">Iran Network</string>
+    <string name="package_name">ir.iritjob.app</string>
+    <string name="custom_url_scheme">ir.iritjob.app</string>
+</resources>

@@ -1,2 +1,42 @@
-backend/venv/
+
+# Android / Capacitor
+frontend/android/.gradle/
+frontend/android/app/build/
+frontend/android/build/
+
+# Frontend generated output
+frontend/node_modules/
+frontend/dist/
+frontend/.output/
+frontend/.vinxi/
+
+# Local OS/editor files
+.DS_Store
+.idea/
+.vscode/
+
+# Local/generated folders
+frontend/.workspace/
+backend/__pycache__/
 **/__pycache__/
+frontend/tsconfig.tsbuildinfo
+
+# Local database/backups/uploads/scripts
+backend/network_plan.db
+backend/uploads/
+*.bak_*
+backend/*reset*.py
+backend/fix_db.py
+backend/update_db.py
+
+# Build outputs
+frontend/dist/
+frontend/.output/
+frontend/node_modules/
+
+# Android local/build
+frontend/android/.gradle/
+frontend/android/local.properties
+frontend/android/app/build/
+frontend/android/build/
+frontend/android/capacitor-cordova-android-plugins/build/
